@@ -25,12 +25,28 @@ export const setProperty = ({ commit }, payload) => {
   }
 }
 
-export const getGeoDetails = ({ commit }, payload) => {
+export const getGeoDetails = ({ commit, dispatch }, payload) => {
   return axios
     .get(
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${payload.latLng.lat()},${payload.latLng.lng()}&key=AIzaSyAdG-lHuJTjodmC3OcPDDnJuqIa6BTSC-4`
     )
     .then(response => {
-      console.log('response', response)
+      const countryResults = response.data.results.filter(result => result.types.indexOf('country') !== -1)
+      const countryName = countryResults.length ? countryResults[0].formatted_address : ''
+      commit('setCountry', countryName)
+      dispatch('getCountryConsumption', countryName)
     })
+}
+
+export const getCountryConsumption = ({ commit }, countryName) => {
+  axios
+  .get(
+    `http://localhost:3001/api/energy-consumption/${countryName}`
+  )
+  .then(response => {
+    commit('setConsumption', response.data.consumption)
+  })
+  .catch(() => {
+    commit('setConsumption', null)
+  });
 }

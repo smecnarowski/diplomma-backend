@@ -2,11 +2,13 @@ export default function() {
   return {
     solarAtlasData: {},
     solarAtlasDataLoading: false,
+    selectedCountry: '',
+    consumption: null,
 
     energyUsage: {
-      knowConsuption: true,
+      knowConsuption: false,
       yearlyCost: 500,
-      yearlyUsage: 4500
+      yearlyUsage: 0
     }
   }
 }

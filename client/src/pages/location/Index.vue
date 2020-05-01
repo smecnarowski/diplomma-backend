@@ -34,7 +34,7 @@
           <q-card-section class="q-pt-xs">
             <GmapMap
               :center="position"
-              :zoom="8"
+              :zoom="9"
               map-type-id="terrain"
               :style="gmapStyle"
               @click="mapClick"
