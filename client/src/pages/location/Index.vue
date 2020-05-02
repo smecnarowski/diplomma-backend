@@ -95,12 +95,11 @@ export default {
   name: 'PageIndex',
   data() {
     return {
-      position: { lat: 49.78349580450346, lng: 19.057072588747076 },
       searchValue: null
     }
   },
   computed: {
-    ...mapState('configuration', ['solarAtlasData', 'solarAtlasDataLoading']),
+    ...mapState('configuration', ['position', 'solarAtlasData', 'solarAtlasDataLoading']),
     hasSolarData() {
       return Object.keys(this.solarAtlasData).length > 0
     },
@@ -115,10 +114,6 @@ export default {
   methods: {
     ...mapActions('configuration', ['getSolarAtlasData']),
     mapClick(data) {
-      this.position = {
-        lat: data.latLng.lat(),
-        lng: data.latLng.lng()
-      }
       this.getSolarAtlasData(data)
     },
     setPlace(place) {

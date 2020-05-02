@@ -2,6 +2,13 @@ import axios from 'axios'
 
 export const getSolarAtlasData = ({ commit, dispatch }, payload) => {
   commit('solarAtlasDataLoading', true)
+
+  const position = {
+    lat: payload.latLng.lat(),
+    lng: payload.latLng.lng()
+  }
+  commit('setPosition', position)
+
   dispatch('getGeoDetails', payload)
   return axios
     .get(

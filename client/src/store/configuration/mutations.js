@@ -28,3 +28,7 @@ export const setProperty = (state, payload) => {
   _set(mod, payload.path, payload.value)
   state[payload.module] = mod
 }
+
+export const setPosition = (state, value) => {
+  state.position = value
+}
