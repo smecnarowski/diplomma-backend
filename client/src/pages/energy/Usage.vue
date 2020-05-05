@@ -10,6 +10,13 @@
       </q-card-section>
       <q-card-section horizontal>
         <q-list>
+          <transition name="fadeIn">
+            <q-item v-if="!knowConsuption">
+              <q-banner dense class="bg-primary text-white">
+                Suggested usage base on "Factbook" data. It's energy consumption per capita for selected country.
+              </q-banner>
+            </q-item>
+          </transition>
           <q-item
             tag="label"
             v-ripple
@@ -58,7 +65,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'PowerUsage',
   computed: {
-    ...mapState('configuration', ['energyUsage']),
+    ...mapState('configuration', ['energyUsage', 'consumption']),
     knowConsuption: {
       get() {
         return this.energyUsage.knowConsuption
@@ -85,7 +92,9 @@ export default {
     },
     yearlyUsage: {
       get() {
-        return this.energyUsage.yearlyUsage
+        return this.energyUsage.knowConsuption 
+          ? this.energyUsage.yearlyUsage || this.consumption
+          : this.consumption
       },
       set(value) {
         this.setProperty({

@@ -5,25 +5,25 @@
       class="bg-primary text-white"
     >
       <q-toolbar>
-        <q-btn
+        <!-- <q-btn
           dense
           flat
           round
           icon="menu"
           @click="expanded = !expanded"
-        />
+        /> -->
 
         <q-toolbar-title>
           Title
         </q-toolbar-title>
 
-        <q-btn
+        <!-- <q-btn
           dense
           flat
           round
           icon="menu"
           @click="right = !right"
-        />
+        /> -->
       </q-toolbar>
     </q-header>
 
@@ -86,7 +86,7 @@
       </div>
     </q-drawer>
 
-    <q-page-container :style="{ 'padding-left': $q.screen.lt.md ? '0px' : '80px' }">
+    <q-page-container :style="{ 'padding-left': $q.screen.lt.md ? '10px' : '80px', 'padding-right': $q.screen.lt.md ? '10px' : '80px' }">
       <router-view />
     </q-page-container>
 
