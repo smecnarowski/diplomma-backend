@@ -23,6 +23,18 @@ export const solarAtlasDataLoading = (state, value) => {
   state.solarAtlasDataLoading = value
 }
 
+export const setRates = (state, value) => {
+  state.rates = value
+}
+
+export const ratesLoading = (state, value) => {
+  state.ratesLoading = value
+}
+
+export const setCurrency = (state, value) => {
+  state.currency = value
+}
+
 export const setProperty = (state, payload) => {
   const mod = state[payload.module]
   _set(mod, payload.path, payload.value)

@@ -1,5 +1,8 @@
 export default function() {
   return {
+    currency: 'USD',
+    rates: {},
+    ratesLoading: false,
     solarAtlasData: {},
     solarAtlasDataLoading: false,
     selectedCountry: '',

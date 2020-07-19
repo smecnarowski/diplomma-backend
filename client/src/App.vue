@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 const randomInt = (min, max) => {
   return min + Math.floor((max - min) * Math.random())
 }
@@ -32,6 +33,16 @@ export default {
         backgroundImage: `url(statics/backgrounds/polygon-background-landscape-natural-tones-1-${this.filledId}.svg)`
       }
     }
+  },
+  methods: {
+    ...mapActions('configuration', ['getRates']),
+  },
+  created() {
+    this.getRates()
+    setInterval(this.getRates, 300000)
+  },
+  destroy() {
+    clearInterval(this.getRates)
   },
   watch: {
     $route(to, from) {

@@ -27,7 +27,6 @@ export const setProperty = ({ commit }, payload) => {
     payloadKeys.indexOf('path') !== -1 &&
     payloadKeys.indexOf('value') !== -1
   ) {
-    console.log('payload', payload)
     commit('setProperty', payload)
   }
 }
@@ -56,4 +55,21 @@ export const getCountryConsumption = ({ commit }, countryName) => {
   .catch(() => {
     commit('setConsumption', null)
   });
+}
+
+export const getRates = ({ commit }) => {
+  commit('ratesLoading', true)
+
+  return axios
+    .get(
+      `http://localhost:3001/api/rates`
+    )
+    .then(response => {
+      commit('setRates', response.data)
+      commit('ratesLoading', false)
+    })
+}
+
+export const setCurrency = ({ commit }, currency) => {
+  commit('setCurrency', currency)
 }
