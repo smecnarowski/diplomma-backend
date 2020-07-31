@@ -6,5 +6,5 @@ export interface User extends Document {
   readonly name: string;
   readonly isAdmin: boolean;
   readonly isManufacturer: boolean;
-  products: string[];
+  products: any[];
 }

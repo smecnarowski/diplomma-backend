@@ -25,6 +25,16 @@ export class UsersService {
     return this.userModel.findOne({ username: username.toLowerCase() })
   }
 
+  async findOneById(id: string): Promise<User | undefined> {
+    return this.userModel.findOne({ _id: id.toLowerCase() })
+      .populate({ 
+        path: 'products',
+        populate: {
+          path: 'currency',
+        } 
+    }).exec()
+  }
+
   async addProductToUser(username: string, productId: string): Promise<User | undefined> {
     const user = await this.findOne(username)
     user.products.push(productId)
@@ -34,7 +44,7 @@ export class UsersService {
 
   async deleteProductFromUser(username: string, productId: string): Promise<User | undefined> {
     const user = await this.findOne(username)
-    user.products = user.products.filter(product => product !== productId)
+    user.products = user.products.filter(product => product.toString() !== productId)
 
     return user.save()
   }

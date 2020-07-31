@@ -52,7 +52,7 @@
         icon="view_module"
         :done="step > 5"
       >
-        <ModulesPage />
+        <InvertersPage />
       </q-step>
 
       <q-step
@@ -74,6 +74,7 @@ import LocationPage from './location/Index'
 import EnergyUsagePage from './energy/Usage'
 import BuildingPage from './building/Index'
 import ModulesPage from './modules/Index'
+import InvertersPage from './inverters/Index'
 
 export default {
   name: 'PageIndex',
@@ -97,6 +98,7 @@ export default {
     EnergyUsagePage,
     BuildingPage,
     ModulesPage,
+    InvertersPage,
   }
 }
 </script>

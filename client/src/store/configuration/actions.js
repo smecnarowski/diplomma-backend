@@ -73,3 +73,45 @@ export const getRates = ({ commit }) => {
 export const setCurrency = ({ commit }, currency) => {
   commit('setCurrency', currency)
 }
+
+export const getManufacturersData = ({ commit }) => {
+  commit('manufacturersDataLoading', true)
+
+  return axios
+    .get(
+      `http://localhost:3001/api/manufacturers`
+    )
+    .then(response => {
+      commit('setManufacturersData', response.data)
+      commit('manufacturersDataLoading', false)
+    })
+}
+
+export const setModule = ({ commit }, module) => {
+  commit('setModule', module)
+}
+
+export const setInverter = ({ commit }, inverter) => {
+  commit('setInverter', inverter)
+}
+
+export const getManufacturerData = ({ commit }, { manufacturerId, type }) => {
+  const destination = type.replace(/^./, type[0].toUpperCase()) + 's'; 
+  commit('set' + destination + 'Loading', true)
+  axios
+  .get(
+    `http://localhost:3001/api/manufacturers/${manufacturerId}`
+  )
+  .then(response => {
+    const products = (response.data.products || []).filter(product =>{
+      return product.type === type
+    })
+    commit('setLoaded' + destination, products)
+  })
+  .catch(() => {
+    commit('setLoaded' + destination, [])
+  })
+  .finally(() => {
+    commit('set' + destination + 'Loading', false)
+  })
+}

@@ -44,3 +44,35 @@ export const setProperty = (state, payload) => {
 export const setPosition = (state, value) => {
   state.position = value
 }
+
+export const manufacturersDataLoading = (state, value) => {
+  state.manufacturersDataLoading = value
+}
+
+export const setManufacturersData = (state, value) => {
+  state.manufacturersData = value
+}
+
+export const setModule = (state, value) => {
+  state.selectedModule = value
+}
+
+export const setInverter = (state, value) => {
+  state.selectedInverter = value
+}
+
+export const setLoadedModules = (state, value) => {
+  state.loadedModules = value
+}
+
+export const setLoadedInverters = (state, value) => {
+  state.loadedInverters = value
+}
+
+export const setModulesLoading = (state, value) => {
+  state.modulesLoading = value
+}
+
+export const setInvertersLoading = (state, value) => {
+  state.invertersLoading = value
+}

@@ -10,9 +10,9 @@
       use-input
     />
 
-    <ModuleInfo v-for="(model, idx) in loadedModules" :key="idx" :module="model" />
+    <InverterInfo v-for="(model, idx) in loadedInverters" :key="idx" :inverter="model" />
 
-    <q-inner-loading :showing="manufacturersDataLoading || modulesLoading">
+    <q-inner-loading :showing="manufacturersDataLoading || invertersLoading">
       <q-spinner-ios size="50px" color="yellow" />
     </q-inner-loading>
   </div>
@@ -20,10 +20,10 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import ModuleInfo from './ModuleInfo'
+import InverterInfo from './InverterInfo'
 
 export default {
-  name: 'ModulesIndex',
+  name: 'InvertersIndex',
   data() {
     return {
       manufacturer: '',
@@ -221,7 +221,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('configuration', ['loadedModules', 'manufacturersData', 'manufacturersDataLoading', 'modulesLoading']),
+    ...mapState('configuration', ['loadedInverters', 'manufacturersData', 'manufacturersDataLoading', 'invertersLoading']),
   },
   methods: {
     ...mapActions('configuration', ['getManufacturersData', 'getManufacturerData']),
@@ -229,15 +229,15 @@ export default {
       update(() => {
         const needle = val.toLowerCase()
         this.manufacturersOptions = this.manufacturersData.filter(v => {
-          const modulesCount = (v.products || {}).modules || 0
-          return modulesCount > 0 && v.name.toLowerCase().indexOf(needle) > -1
+          const invertersCount = (v.products || {}).inverters || 0
+          return invertersCount > 0 && v.name.toLowerCase().indexOf(needle) > -1
         })
       })
     },
-    loadModules() {
+    loadInverters() {
       this.getManufacturerData({
         manufacturerId: this.manufacturer._id,
-        type: 'module'
+        type: 'inverter'
       })
     }
   },
@@ -249,12 +249,12 @@ export default {
   watch: {
     manufacturer(newValue) {
       if (newValue) {
-        this.loadModules();
+        this.loadInverters();
       }
     }
   },
   components: {
-    ModuleInfo
+    InverterInfo
   }
 }
 </script>

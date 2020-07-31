@@ -11,6 +11,7 @@ import { RatesService } from './rates/rates.service';
 import { UsersService } from './users/users.service';
 import { CreateProductDto } from './products/dto/create-product.dto';
 import { ProductsService } from './products/products.service';
+import { ParseObjectIdPipe } from './components/pipes/ParseObjectId.pipe';
 
 @Controller()
 export class AppController {
@@ -46,7 +47,7 @@ export class AppController {
 
   @UseGuards(JwtAuthGuard)
   @Post('products')
-  async delProduct(@Request() req, @Body() createProductDto: CreateProductDto) {
+  async addProduct(@Request() req, @Body() createProductDto: CreateProductDto) {
     if (!req.user.isManufacturer) {
       throw new UnauthorizedException()
     }
@@ -60,7 +61,7 @@ export class AppController {
 
   @UseGuards(JwtAuthGuard)
   @Delete('products/:productId')
-  async addProduct(@Request() req, @Param('productId') productId) {
+  async delProduct(@Request() req, @Param('productId', new ParseObjectIdPipe()) productId: string) {
     if (!req.user.isManufacturer) {
       throw new UnauthorizedException()
     }
@@ -69,8 +70,11 @@ export class AppController {
     if (!product) {
       throw new NotFoundException()
     }
-    console.log(req.user.products.values(), req.user.products, req.user.products.indexOf(productId))
-    if (req.user.products.values().indexOf(productId) === -1) {
+    const validProducts = req.user.products.filter(val => {
+      console.log(val, productId)
+      return val.toString() === productId
+    })
+    if (validProducts.length === 0) {
       throw new UnauthorizedException()
     }
     
@@ -111,13 +115,44 @@ export class AppController {
   @Get('manufacturers')
   async getManufacturers() {
     const manufacturers = await this.usersService.getManufacturers()
-    console.log(manufacturers)
     return manufacturers.map(manufacturer => {
-      return {
+      const data = {
         _id: manufacturer._id,
         name: manufacturer.name,
-        products: manufacturer.products,
+        products: {
+          inverters: 0,
+          modules: 0,
+        },
       }
+      manufacturer.products.forEach(product => {
+        switch (product.type) {
+          case 'inverter': 
+            data.products.inverters++
+            break
+          case 'module':
+            data.products.modules++
+            break
+        }
+      })
+
+      return data
     })
+  }
+
+  @Get('manufacturers/:id')
+  async getManufacturerWithProducts(@Param('id', new ParseObjectIdPipe()) id: string) {
+    let user = await this.usersService.findOneById(id)
+    if (!user || !user.isManufacturer) {
+      throw new NotFoundException()
+    }
+    let { __v, isAdmin, isManufacturer, password, username, ...manufacturer } = user.toObject()
+
+    manufacturer.products = user.products.map(product => {
+      const { __v, currency, owner, ...data } = product.toObject()
+      data.priceCurrency = currency.currency
+      return data;
+    })
+    
+    return manufacturer
   }
 }

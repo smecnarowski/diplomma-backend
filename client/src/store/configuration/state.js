@@ -1,12 +1,20 @@
 export default function() {
   return {
+    consumption: null,
     currency: 'USD',
+    invertersLoading: false,
+    loadedInverters: [],
+    loadedModules: [],
+    manufacturersData: [],
+    manufacturersDataLoading: false,
+    modulesLoading: false,
     rates: {},
     ratesLoading: false,
+    selectedInverter: {},
+    selectedModule: {},
     solarAtlasData: {},
     solarAtlasDataLoading: false,
     selectedCountry: '',
-    consumption: null,
 
     position: { 
       lat: 49.78349580450346, 
