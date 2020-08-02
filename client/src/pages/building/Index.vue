@@ -12,15 +12,15 @@
           label
           :label-value="angleLabel"
           label-always
-          :min="0"
+          :min="90"
           :step="5"
-          :max="360"
+          :max="270"
         />
       </div>
       <div :class="directionsClass">
         <div class="row justify-center">
         <q-circular-progress
-          :angle="direction - 2"
+          :angle="direction - 4 + (isNorthernHemisphere ? 180 : 0)"
           show-value
           class="q-my-md"
           :value="value"
@@ -58,53 +58,55 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'BuildingIndex',
   data() {
     return {
-      angle: 30,
-      direction: 0,
       value: 2
     }
   },
   computed: {
+    ...mapState('configuration', ['modulesAngle', 'modulesDirection', 'position']),
+    angle: {
+      set(angle) {
+        this.setModulesAngle(angle)
+      },
+      get() {
+        return this.modulesAngle
+      }
+    },
     angleLabel() {
       switch (true) {
-        case this.direction > 345 || this.direction <= 15:
-          return 'N'
-        case this.direction > 15 && this.direction <= 30:
-          return 'NNE'
-        case this.direction > 30 && this.direction <= 60:
-          return 'NE'
-        case this.direction > 60 && this.direction <= 75:
-          return 'ENE'
-        case this.direction > 75 && this.direction <= 105:
-          return 'E'
+        case this.direction >= 90 && this.direction <= 105:
+          return this.isNorthernHemisphere ? 'W' : 'E'
         case this.direction > 105 && this.direction <= 120:
-          return 'ESE'
+          return this.isNorthernHemisphere ? 'WNW' : 'ESE'
         case this.direction > 120 && this.direction <= 150:
-          return 'SE'
+          return this.isNorthernHemisphere ? 'NW' : 'SE'
         case this.direction > 150 && this.direction <= 165:
-          return 'SSE'
+          return this.isNorthernHemisphere ? 'NNW' : 'SSE'
         case this.direction > 165 && this.direction <= 195:
-          return 'S'
+          return this.isNorthernHemisphere ? 'N' : 'S'
         case this.direction > 195 && this.direction <= 210:
-          return 'SSW'
+          return this.isNorthernHemisphere ? 'NNE' : 'SSW'
         case this.direction > 210 && this.direction <= 240:
-          return 'SW'
+          return this.isNorthernHemisphere ? 'NE' : 'SW'
         case this.direction > 240 && this.direction <= 255:
-          return 'WSW'
-        case this.direction > 255 && this.direction <= 285:
-          return 'W'
-        case this.direction > 285 && this.direction <= 300:
-          return 'WNW'
-        case this.direction > 300 && this.direction <= 330:
-          return 'NW'
-        case this.direction > 330 && this.direction <= 345:
-          return 'NNW'
+          return this.isNorthernHemisphere ? 'ENE' : 'WSW'
+        case this.direction > 255 && this.direction <= 270:
+          return this.isNorthernHemisphere ? 'E' : 'W'
       }
 
       return ''
+    },
+    direction: {
+      set(direction) {
+        this.setModulesDirection(direction)
+      },
+      get() {
+        return this.modulesDirection
+      }
     },
     directionsClass() {
       switch(true) {
@@ -113,7 +115,13 @@ export default {
         default:
           return 'col-2'
       }
+    },
+    isNorthernHemisphere() {
+      return this.position.lat < 0
     }
-  }
+  },
+  methods: {
+    ...mapActions('configuration', ['setModulesAngle', 'setModulesDirection']),
+  },
 }
 </script>

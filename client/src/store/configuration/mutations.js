@@ -76,3 +76,11 @@ export const setModulesLoading = (state, value) => {
 export const setInvertersLoading = (state, value) => {
   state.invertersLoading = value
 }
+
+export const setModulesAngle = (state, value) => {
+  state.modulesAngle = value
+}
+
+export const setModulesDirection = (state, value) => {
+  state.modulesDirection = value
+}

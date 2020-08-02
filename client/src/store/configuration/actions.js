@@ -47,7 +47,7 @@ export const getGeoDetails = ({ commit, dispatch }, payload) => {
 export const getCountryConsumption = ({ commit }, countryName) => {
   axios
   .get(
-    `http://localhost:3001/api/energy-consumption/${countryName}`
+    `http://localhost:3001/api/energy-consumptions/${countryName}`
   )
   .then(response => {
     commit('setConsumption', response.data.consumption)
@@ -89,6 +89,14 @@ export const getManufacturersData = ({ commit }) => {
 
 export const setModule = ({ commit }, module) => {
   commit('setModule', module)
+}
+
+export const setModulesAngle = ({ commit }, angle) => {
+  commit('setModulesAngle', angle)
+}
+
+export const setModulesDirection = ({ commit }, direction) => {
+  commit('setModulesDirection', direction)
 }
 
 export const setInverter = ({ commit }, inverter) => {

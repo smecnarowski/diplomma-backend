@@ -61,9 +61,7 @@
         icon="attach_money"
         :done="step > 6"
       >
-        Try out different ad text to see what brings in the most customers, and learn how to
-        enhance your ads using features like ad extensions. If you run into any problems with
-        your ads, find out how to tell if they're running and how to resolve approval issues.
+        <ResultPage />
       </q-step>
     </q-stepper>
   </q-page>
@@ -75,6 +73,7 @@ import EnergyUsagePage from './energy/Usage'
 import BuildingPage from './building/Index'
 import ModulesPage from './modules/Index'
 import InvertersPage from './inverters/Index'
+import ResultPage from './result/Index'
 
 export default {
   name: 'PageIndex',
@@ -99,6 +98,7 @@ export default {
     BuildingPage,
     ModulesPage,
     InvertersPage,
+    ResultPage,
   }
 }
 </script>

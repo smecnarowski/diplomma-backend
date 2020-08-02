@@ -1,7 +1,9 @@
 export default function() {
   return {
+    modulesAngle: 30,
     consumption: null,
     currency: 'USD',
+    modulesDirection: 180,
     invertersLoading: false,
     loadedInverters: [],
     loadedModules: [],

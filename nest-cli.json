@@ -1,4 +1,11 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "assets": [
+        "i18n/**/*",
+        "templates/**/*",
+        "maths/**/*.py"
+    ]
+}
 }

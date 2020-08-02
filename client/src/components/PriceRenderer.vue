@@ -19,8 +19,11 @@ export default {
   computed: {
     ...mapState('configuration', ['rates', 'currency']),
     priceByCurrency() {
+      if (this.currency === this.baseCurrency) {
+        return this.price
+      }
       const priceInUSD = this.price * (this.rates[this.baseCurrency] || 0)
-      return (priceInUSD * this.rates[this.currency]).toFixed(2)
+      return (priceInUSD / this.rates[this.currency]).toFixed(2)
     }
   }
 }
