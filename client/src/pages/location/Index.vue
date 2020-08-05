@@ -10,16 +10,18 @@
       </gmap-autocomplete>
     </q-card-section>
     <q-card-section horizontal>
-      <q-card-section class="q-pt-xs">
-        <GmapMap
-          :center="position"
-          :zoom="9"
-          map-type-id="terrain"
-          :style="gmapStyle"
-          @click="mapClick"
-        >
-          <GmapMarker :position="position" />
-        </GmapMap>
+      <q-card-section class="q-pt-xs full-width items-center">
+        <div>
+          <GmapMap
+            :center="position"
+            :zoom="9"
+            map-type-id="terrain"
+            :style="gmapStyle"
+            @click="mapClick"
+          >
+            <GmapMarker :position="position" />
+          </GmapMap>
+        </div>
       </q-card-section>
     </q-card-section>
 
@@ -57,7 +59,7 @@
             <q-item-label>Optimum tilt of PV modules</q-item-label>
           </q-item-section>
           <q-item-section side>
-            {{ solarAtlasData.OPTA | rounded }}/180°
+            {{ solarAtlasData.OPTA | rounded }}°
           </q-item-section>
         </q-item>
       </q-list>
@@ -81,10 +83,9 @@ export default {
       return Object.keys(this.solarAtlasData).length > 0
     },
     gmapStyle() {
-      const maxWidth = Math.min(660, this.$q.screen.width - 130)
       return {
         height: '280px',
-        maxWidth: maxWidth + 'px',
+        maxWidth: '100%',
         width: 'calc(100vw - 70px)'
       }
     }

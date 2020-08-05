@@ -11,7 +11,6 @@ import { DatabaseModule } from './database/database.module';
 import { TasksService } from './tasks.service';
 import { RatesModule } from './rates/rates.module';
 import { ProductsModule } from './products/products.module';
-import { MathsModule } from './maths/maths.module';
 
 @Module({
   imports: [
@@ -25,7 +24,6 @@ import { MathsModule } from './maths/maths.module';
     DatabaseModule,
     RatesModule,
     ProductsModule,
-    MathsModule,
   ],
   controllers: [AppController],
   providers: [AppService, TasksService]

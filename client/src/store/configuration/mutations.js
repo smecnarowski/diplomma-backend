@@ -73,8 +73,16 @@ export const setModulesLoading = (state, value) => {
   state.modulesLoading = value
 }
 
+export const setModulesManufacturer = (state, value) => {
+  state.modulesManufacturer = value
+}
+
 export const setInvertersLoading = (state, value) => {
   state.invertersLoading = value
+}
+
+export const setInvertersManufacturer = (state, value) => {
+  state.invertersManufacturer = value
 }
 
 export const setModulesAngle = (state, value) => {
@@ -83,4 +91,28 @@ export const setModulesAngle = (state, value) => {
 
 export const setModulesDirection = (state, value) => {
   state.modulesDirection = value
+}
+
+export const setPvWattData = (state, value) => {
+  state.pvWattData = value
+}
+
+export const setManualConsumption = (state, value) => {
+  state.manualConsumption = value
+}
+
+export const setManualYearlyUsage = (state, value) => {
+  state.manualYearlyUsage = value
+}
+
+export const setYearlyCost = (state, value) => {
+  state.yearlyCost = value
+}
+
+export const setPvWattDataLoading = (state, value) => {
+  state.pvWattDataLoading = value
+}
+
+export const showDialog = function(state, dialogData) {
+  this._vm.$q.dialog(dialogData)
 }

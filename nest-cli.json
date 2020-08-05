@@ -3,9 +3,7 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "assets": [
-        "i18n/**/*",
-        "templates/**/*",
-        "maths/**/*.py"
+      "**/*.py"
     ]
-}
+  }
 }

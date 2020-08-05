@@ -36,17 +36,14 @@
             transition-next="jump-up"
           >
             <q-tab-panel name="info">
-              <div class="text-h6 q-mb-md">Description</div>
               <p v-html="$sanitize(inverter.description)" />
             </q-tab-panel>
 
             <q-tab-panel name="properties">
-              <div class="text-h6 q-mb-md">Properties</div>
               <q-table
                 :data="properties"
                 :columns="columns"
                 row-key="name"
-                hide-bottom
                 flat
                 bordered
                 separator="vertical"

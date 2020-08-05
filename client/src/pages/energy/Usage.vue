@@ -2,7 +2,7 @@
   <q-list style="width: 100%;">
     <transition name="fadeIn">
       <q-item>
-        <q-banner dense class="bg-primary text-white">
+        <q-banner dense class="bg-primary text-white full-width">
           Suggested usage base on "Factbook" data. It's energy consumption per capita for selected country.
         </q-banner>
       </q-item>
@@ -30,11 +30,12 @@
         suffix="kWh"
         min="10"
         step="10"
+        :disable="!knowConsuption"
       />
     </q-item>
     <q-item>
       <q-input
-        v-model.number="yearlyCost"
+        v-model.number="cost"
         type="number"
         label="Yearly cost"
         style="width: 100%"
@@ -55,49 +56,43 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'PowerUsage',
   computed: {
-    ...mapState('configuration', ['energyUsage', 'consumption']),
+    ...mapState('configuration', ['consumption', 'yearlyCost', 'manualConsumption', 'manualYearlyUsage', 'manualYearlyCost']),
     knowConsuption: {
       get() {
-        return this.energyUsage.knowConsuption
+        return this.manualConsumption
       },
       set(value) {
-        this.setProperty({
-          module: 'energyUsage',
-          path: 'knowConsuption',
-          value
-        })
-      }
+        this.$store.commit('configuration/setManualConsumption', value)
+      },
     },
-    yearlyCost: {
+    cost: {
       get() {
-        return this.energyUsage.yearlyCost
+        return this.yearlyCost
       },
       set(value) {
-        this.setProperty({
-          module: 'energyUsage',
-          path: 'yearlyCost',
-          value
-        })
+        this.$store.commit('configuration/setYearlyCost', value)
       }
     },
     yearlyUsage: {
       get() {
-        return this.energyUsage.knowConsuption 
-          ? this.energyUsage.yearlyUsage || this.consumption
+        return this.knowConsuption 
+          ? this.manualYearlyUsage || this.consumption
           : this.consumption
       },
       set(value) {
-        this.setProperty({
-          module: 'energyUsage',
-          path: 'yearlyUsage',
-          value
-        })
+        this.$store.commit('configuration/setManualYearlyUsage', value)
       }
     }
   },
   methods: {
     ...mapActions('configuration', ['setProperty']),
     mapClick(data) {}
+  },
+  watch: {
+    energyUsage: {
+      deep: true,
+      handler() {}
+    }
   }
 }
 </script>

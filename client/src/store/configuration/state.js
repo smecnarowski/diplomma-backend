@@ -3,13 +3,22 @@ export default function() {
     modulesAngle: 30,
     consumption: null,
     currency: 'USD',
-    modulesDirection: 180,
     invertersLoading: false,
+    invertersManufacturer: '',
     loadedInverters: [],
     loadedModules: [],
+    manualConsumption: false,
     manufacturersData: [],
     manufacturersDataLoading: false,
+    modulesDirection: 180,
     modulesLoading: false,
+    modulesManufacturer: '',
+    position: { 
+      lat: 49.78349580450346, 
+      lng: 19.057072588747076
+    },
+    pvWattData: {},
+    pvWattDataLoading: false,
     rates: {},
     ratesLoading: false,
     selectedInverter: {},
@@ -17,16 +26,7 @@ export default function() {
     solarAtlasData: {},
     solarAtlasDataLoading: false,
     selectedCountry: '',
-
-    position: { 
-      lat: 49.78349580450346, 
-      lng: 19.057072588747076
-    },
-
-    energyUsage: {
-      knowConsuption: false,
-      yearlyCost: 500,
-      yearlyUsage: 0
-    }
+    yearlyCost: 500,
+    yearlyUsage: 0
   }
 }

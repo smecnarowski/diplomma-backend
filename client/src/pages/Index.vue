@@ -33,6 +33,7 @@
         :title="$t(stepsTitles[2])"
         icon="assignment"
         :done="step > 3"
+        :disable="step < 2"
       >
         <BuildingPage />
       </q-step>
@@ -42,6 +43,7 @@
         :title="$t(stepsTitles[3])"
         icon="view_module"
         :done="step > 4"
+        :disable="step < 3"
       >
         <ModulesPage />
       </q-step>
@@ -51,6 +53,7 @@
         :title="$t(stepsTitles[4])"
         icon="view_module"
         :done="step > 5"
+        :disable="step < 4 || noModule"
       >
         <InvertersPage />
       </q-step>
@@ -60,6 +63,7 @@
         :title="$t(stepsTitles[5])"
         icon="attach_money"
         :done="step > 6"
+        :disable="step < 5 || noInverter"
       >
         <ResultPage />
       </q-step>
@@ -68,6 +72,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import LocationPage from './location/Index'
 import EnergyUsagePage from './energy/Usage'
 import BuildingPage from './building/Index'
@@ -79,13 +85,20 @@ export default {
   name: 'PageIndex',
   data() {
     return {
-      step: 4,
+      step: 1,
       stepsTitles: [
         'Location', 'Energy', 'Building', 'Modules', 'Inverters', 'Result'
       ]
     }
   },
   computed: {
+    ...mapState('configuration', ['selectedInverter', 'selectedModule']),
+    noInverter() {
+      return Object.keys(this.selectedInverter).length === 0
+    },
+    noModule() {
+      return Object.keys(this.selectedModule).length === 0
+    },
     stepper() {
       return {
         width: this.$q.screen.lt.md ? '100%': '900px'

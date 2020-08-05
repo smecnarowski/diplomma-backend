@@ -9,6 +9,7 @@
       <div class="col">
         <q-slider
           v-model="direction"
+          @change="getPvWattData()"
           label
           :label-value="angleLabel"
           label-always
@@ -43,31 +44,61 @@
       <div class="col-12">
         <q-slider
           v-model="angle"
+          @change="getPvWattData()"
           markers
           snap
           label
           :label-value="angle + String.fromCharCode(176) + 'C'"
           label-always
           :step="5"
-          :min="30"
-          :max="60"
+          :min="0"
+          :max="90"
         />
       </div>
     </div>
+    <div class="row">
+      <div class="col-12">
+        Efficiency related to the tilt and azimuth.
+      </div>
+    </div>
+    <div class="row q-pt-lg">
+      <div class="col-12">
+        <q-slider
+          v-model="efficiency"
+          :min="0"
+          :max="180"
+          :step=".1"
+          readonly
+          label
+          :label-value="efficiency + '%'"
+          label-always
+        />
+      </div>
+    </div>
+    <q-inner-loading :showing="pvWattDataLoading">
+      <q-spinner-gears size="50px" color="primary" />
+    </q-inner-loading>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 export default {
   name: 'BuildingIndex',
   data() {
     return {
+      timeout: null,
       value: 2
     }
   },
+  mounted() {
+    if (Object.keys(this.pvWattData).length === 0) {
+      this.getPvWattData()
+    }
+  },
   computed: {
-    ...mapState('configuration', ['modulesAngle', 'modulesDirection', 'position']),
+    ...mapState('configuration', ['modulesAngle', 'modulesDirection', 'position', 'pvWattData', 'pvWattDataLoading']),
+    ...mapGetters('configuration', ['efficiency']),
     angle: {
       set(angle) {
         this.setModulesAngle(angle)
@@ -121,7 +152,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('configuration', ['setModulesAngle', 'setModulesDirection']),
-  },
+    ...mapActions('configuration', ['getPvWattData', 'setModulesAngle', 'setModulesDirection'])
+  }
 }
 </script>

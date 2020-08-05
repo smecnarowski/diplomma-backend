@@ -26,7 +26,6 @@ export default {
   name: 'ModulesIndex',
   data() {
     return {
-      manufacturer: '',
       // manufacturers: [
       //   {
       //     id: 1,
@@ -221,10 +220,18 @@ export default {
     }
   },
   computed: {
-    ...mapState('configuration', ['loadedModules', 'manufacturersData', 'manufacturersDataLoading', 'modulesLoading']),
+    ...mapState('configuration', ['loadedModules', 'manufacturersData', 'manufacturersDataLoading', 'modulesLoading', 'modulesManufacturer']),
+    manufacturer: {
+      set(manufacturer) {
+        this.setModulesManufacturer(manufacturer)
+      },
+      get() {
+        return this.modulesManufacturer
+      }
+    }
   },
   methods: {
-    ...mapActions('configuration', ['getManufacturersData', 'getManufacturerData']),
+    ...mapActions('configuration', ['getManufacturersData', 'getManufacturerData', 'setModulesManufacturer']),
     filterManufacturersFn (val, update) {
       update(() => {
         const needle = val.toLowerCase()

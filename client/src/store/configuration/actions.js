@@ -45,9 +45,10 @@ export const getGeoDetails = ({ commit, dispatch }, payload) => {
 }
 
 export const getCountryConsumption = ({ commit }, countryName) => {
+  console.log(process)
   axios
   .get(
-    `http://localhost:3001/api/energy-consumptions/${countryName}`
+    `${process.env.API}/api/energy-consumptions/${countryName}`
   )
   .then(response => {
     commit('setConsumption', response.data.consumption)
@@ -62,7 +63,7 @@ export const getRates = ({ commit }) => {
 
   return axios
     .get(
-      `http://localhost:3001/api/rates`
+      `${process.env.api}/api/rates`
     )
     .then(response => {
       commit('setRates', response.data)
@@ -79,7 +80,7 @@ export const getManufacturersData = ({ commit }) => {
 
   return axios
     .get(
-      `http://localhost:3001/api/manufacturers`
+      `${process.env.api}/api/manufacturers`
     )
     .then(response => {
       commit('setManufacturersData', response.data)
@@ -99,8 +100,20 @@ export const setModulesDirection = ({ commit }, direction) => {
   commit('setModulesDirection', direction)
 }
 
+export const setModulesManufacturer = ({ commit }, manufacturer) => {
+  commit('setModulesManufacturer', manufacturer)
+}
+
 export const setInverter = ({ commit }, inverter) => {
   commit('setInverter', inverter)
+}
+
+export const setInvertersManufacturer = ({ commit }, manufacturer) => {
+  commit('setInvertersManufacturer', manufacturer)
+}
+
+export const setManualConsumption = ({ commit }, manualConsumption) => {
+  commit('setManualConsumption', manualConsumption)
 }
 
 export const getManufacturerData = ({ commit }, { manufacturerId, type }) => {
@@ -108,7 +121,7 @@ export const getManufacturerData = ({ commit }, { manufacturerId, type }) => {
   commit('set' + destination + 'Loading', true)
   axios
   .get(
-    `http://localhost:3001/api/manufacturers/${manufacturerId}`
+    `${process.env.api}/api/manufacturers/${manufacturerId}`
   )
   .then(response => {
     const products = (response.data.products || []).filter(product =>{
@@ -122,4 +135,43 @@ export const getManufacturerData = ({ commit }, { manufacturerId, type }) => {
   .finally(() => {
     commit('set' + destination + 'Loading', false)
   })
+}
+
+export const getPvWattData = ({ commit, state }) => {
+  commit('setPvWattDataLoading', true)
+  return axios
+    .get(
+      'https://developer.nrel.gov/api/pvwatts/v6.json',
+      {
+        params: {
+          api_key: 'm4F3EXwxtBf0MTY6Vv72TFI7tAS2d91AAaLHUznt',
+          array_type: 1,
+          azimuth: state.modulesDirection,
+          dataset: 'intl',
+          lat: state.position.lat,
+          lon: state.position.lng,
+          losses: 0,
+          module_type: 0,
+          system_capacity: (state.manualConsumption ? state.yearlyUsage : state.consumption) / 1000,
+          tilt: state.modulesAngle,
+        }
+      }
+    )
+    .then(response => {
+      commit('setPvWattData', response.data)
+    })
+    .catch(error => {
+      const data = error.response.data
+      const errors = data['errors'] || []
+      if (errors.length) {
+        commit('showDialog', {
+          dark: true,
+          title: 'Information',
+          message: errors[0]
+        })
+      }
+    })
+    .finally(() => {
+      commit('setPvWattDataLoading', false)
+    })
 }
