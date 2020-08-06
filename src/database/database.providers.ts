@@ -4,6 +4,6 @@ export const databaseProviders = [
   {
     provide: 'DATABASE_CONNECTION',
     useFactory: (): Promise<typeof mongoose> =>
-      mongoose.connect('mongodb://diplommaAdmin:example@localhost/diplomma'),
+      mongoose.connect(process.env.MONGODB_URL || 'mongodb://diplommaAdmin:example@localhost/diplomma'),
   },
 ];
