@@ -7,3 +7,7 @@ export function consumption(state) {
 export function efficiency(state, getters) {
     return parseInt((state.pvWattData['outputs'] || {})['ac_annual'] / (getters.consumption / 100))
 }
+
+export function modulesCount(state, getters) {
+    return Math.ceil(getters.consumption / (state.selectedModule.power * (getters.efficiency / 100)))
+}

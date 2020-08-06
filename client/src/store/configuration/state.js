@@ -26,6 +26,7 @@ export default function() {
     solarAtlasData: {},
     solarAtlasDataLoading: false,
     selectedCountry: '',
+    stepTitle: '',
     yearlyCost: 500,
     yearlyUsage: 0
   }

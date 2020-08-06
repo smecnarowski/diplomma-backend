@@ -105,6 +105,19 @@ export default {
       }
     }
   },
+  methods: {
+    setTitle() {
+      this.$store.commit('configuration/setStepTitle', this.stepsTitles[this.step - 1])
+    }
+  },
+  mounted() {
+    this.setTitle()
+  },
+  watch: {
+    step(step) {
+      this.setTitle()
+    }
+  },
   components: {
     LocationPage,
     EnergyUsagePage,

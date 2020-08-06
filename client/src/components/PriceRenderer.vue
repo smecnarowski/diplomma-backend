@@ -13,7 +13,8 @@ export default {
     baseCurrency: {
       default: 'USD',
       type: String,
-    }
+    },
+    rounded: Boolean,
   },
   template: '<div class="price"></div>',
   computed: {
@@ -23,7 +24,7 @@ export default {
         return this.price
       }
       const priceInUSD = this.price * (this.rates[this.baseCurrency] || 0)
-      return (priceInUSD / this.rates[this.currency]).toFixed(2)
+      return (priceInUSD * this.rates[this.currency]).toFixed(this.rounded ? 0 : 2)
     }
   }
 }

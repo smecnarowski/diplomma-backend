@@ -4,6 +4,15 @@
   "compilerOptions": {
     "assets": [
       "**/*.py"
+    ],
+    "plugins": [
+      {
+        "name": "@nestjs/swagger/plugin",
+        "options": {
+          "classValidatorShim": true,
+          "dtoFileNameSuffix": "dto"
+        }
+      }
     ]
   }
 }

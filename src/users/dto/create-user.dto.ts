@@ -1,23 +1,29 @@
 import { IsString, IsEmail, IsBoolean, IsOptional, IsNotEmpty } from 'class-validator';
 import { Transform } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
   @IsEmail()
   @Transform(username => username.toLowerCase())
+  @ApiProperty()
   readonly username: string;
 
   @IsString()
   @IsNotEmpty()
+  @ApiProperty()
   password: string;
 
   @IsString()
+  @ApiProperty()
   readonly name: string;
 
   @IsOptional()
   @IsBoolean()
-  readonly isAdmin: boolean;
+  @ApiProperty()
+  readonly isAdmin?: boolean;
 
   @IsOptional()
   @IsBoolean()
-  readonly isManufacturer: boolean;
+  @ApiProperty()
+  readonly isManufacturer?: boolean;
 }

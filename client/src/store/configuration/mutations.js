@@ -113,6 +113,10 @@ export const setPvWattDataLoading = (state, value) => {
   state.pvWattDataLoading = value
 }
 
+export const setStepTitle = function(state, value) {
+  state.stepTitle = value
+}
+
 export const showDialog = function(state, dialogData) {
   this._vm.$q.dialog(dialogData)
 }

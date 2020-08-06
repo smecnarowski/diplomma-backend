@@ -45,10 +45,9 @@ export const getGeoDetails = ({ commit, dispatch }, payload) => {
 }
 
 export const getCountryConsumption = ({ commit }, countryName) => {
-  console.log(process)
   axios
   .get(
-    `${process.env.API}/api/energy-consumptions/${countryName}`
+    `${process.env.API_URL}/api/energy-consumptions/${countryName}`
   )
   .then(response => {
     commit('setConsumption', response.data.consumption)
@@ -63,7 +62,7 @@ export const getRates = ({ commit }) => {
 
   return axios
     .get(
-      `${process.env.api}/api/rates`
+      `${process.env.API_URL}/api/rates`
     )
     .then(response => {
       commit('setRates', response.data)
@@ -80,7 +79,7 @@ export const getManufacturersData = ({ commit }) => {
 
   return axios
     .get(
-      `${process.env.api}/api/manufacturers`
+      `${process.env.API_URL}/api/manufacturers`
     )
     .then(response => {
       commit('setManufacturersData', response.data)
@@ -121,7 +120,7 @@ export const getManufacturerData = ({ commit }, { manufacturerId, type }) => {
   commit('set' + destination + 'Loading', true)
   axios
   .get(
-    `${process.env.api}/api/manufacturers/${manufacturerId}`
+    `${process.env.API_URL}/api/manufacturers/${manufacturerId}`
   )
   .then(response => {
     const products = (response.data.products || []).filter(product =>{

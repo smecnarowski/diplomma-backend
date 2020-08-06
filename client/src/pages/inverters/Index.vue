@@ -10,7 +10,22 @@
       use-input
     />
 
-    <InverterInfo v-for="(model, idx) in loadedInverters" :key="idx" :inverter="model" />
+    <div class="row no-wrap items-center q-mt-md q-pa-sm bg-grey-3 rounded-borders">
+      <q-toggle
+        v-model="allowOversized"
+        label="Allow oversized"
+      />
+
+      <q-space />
+
+      
+      <q-toggle
+        v-model="showAll"
+        label="Show all"
+        left-label
+      />
+    </div>
+    <InverterInfo v-for="(model, idx) in filteredInverters" :key="idx" :inverter="model" />
 
     <q-inner-loading :showing="manufacturersDataLoading || invertersLoading">
       <q-spinner-ios size="50px" color="yellow" />
@@ -19,18 +34,32 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import InverterInfo from './InverterInfo'
 
 export default {
   name: 'InvertersIndex',
   data() {
     return {
-      manufacturersOptions: []
+      allowOversized: true,
+      manufacturersOptions: [],
+      showAll: false,
     }
   },
   computed: {
-    ...mapState('configuration', ['loadedInverters', 'manufacturersData', 'manufacturersDataLoading', 'invertersLoading', 'invertersManufacturer']),
+    ...mapState('configuration', ['invertersLoading', 'invertersManufacturer', 'loadedInverters', 'manufacturersData', 'manufacturersDataLoading', 'selectedModule']),
+    ...mapGetters('configuration', ['modulesCount']),
+    filteredInverters() {
+      if (this.showAll) {
+        return this.loadedInverters
+      }
+
+      const expectedPower = this.modulesCount * this.selectedModule.power
+      const maxPower = this.allowOversized ? Number.MAX_SAFE_INTEGER : expectedPower * 1.2
+      return this.loadedInverters.filter(inverter => {
+        return inverter.power >= expectedPower && inverter.power <= maxPower
+      })
+    },
     manufacturer: {
       set(manufacturer) {
         this.setInvertersManufacturer(manufacturer)

@@ -71,7 +71,6 @@ export class AppController {
       throw new NotFoundException()
     }
     const validProducts = req.user.products.filter(val => {
-      console.log(val, productId)
       return val.toString() === productId
     })
     if (validProducts.length === 0) {

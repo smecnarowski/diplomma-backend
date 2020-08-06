@@ -28,6 +28,7 @@
     "@nestjs/platform-express": "^6.7.2",
     "@nestjs/schedule": "^0.4.0",
     "@nestjs/serve-static": "^1.0.2",
+    "@nestjs/swagger": "^4.5.12",
     "bcrypt": "^5.0.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.1",
@@ -40,7 +41,8 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.5",
-    "sanitize-html": "^1.27.0"
+    "sanitize-html": "^1.27.0",
+    "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {
     "@nestjs/cli": "^6.9.0",

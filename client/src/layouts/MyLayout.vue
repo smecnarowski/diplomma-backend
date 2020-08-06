@@ -6,7 +6,7 @@
     >
       <q-toolbar>
         <q-toolbar-title>
-          Title
+          {{ stepTitle }}
         </q-toolbar-title>
         <q-space />
         <LanguageSwitcher />
@@ -53,6 +53,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import routes from './../router/routes'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 import CurrencySwitcher from '../components/CurrencySwitcher'
@@ -70,6 +72,9 @@ export default {
       routeNames: [],
       tab: null
     }
+  },
+  computed: {
+    ...mapState('configuration', ['stepTitle']),
   },
   mounted() {
     this.setRouteNames()
