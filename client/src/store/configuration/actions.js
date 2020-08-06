@@ -136,7 +136,7 @@ export const getManufacturerData = ({ commit }, { manufacturerId, type }) => {
   })
 }
 
-export const getPvWattData = ({ commit, state }) => {
+export const getPvWattData = ({ commit, state, getters }) => {
   commit('setPvWattDataLoading', true)
   return axios
     .get(
@@ -151,7 +151,7 @@ export const getPvWattData = ({ commit, state }) => {
           lon: state.position.lng,
           losses: 0,
           module_type: 0,
-          system_capacity: (state.manualConsumption ? state.yearlyUsage : state.consumption) / 1000,
+          system_capacity: getters.consumption / 1000,
           tilt: state.modulesAngle,
         }
       }

@@ -1,7 +1,7 @@
 <template>
   <q-list style="width: 100%;">
     <transition name="fadeIn">
-      <q-item>
+      <q-item class="q-px-none">
         <q-banner dense class="bg-primary text-white full-width">
           Suggested usage base on "Factbook" data. It's energy consumption per capita for selected country.
         </q-banner>
@@ -51,18 +51,20 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'PowerUsage',
   computed: {
-    ...mapState('configuration', ['consumption', 'yearlyCost', 'manualConsumption', 'manualYearlyUsage', 'manualYearlyCost']),
+    ...mapState('configuration', ['yearlyCost', 'manualConsumption', 'manualYearlyCost']),
+    ...mapGetters('configuration', ['consumption']),
     knowConsuption: {
       get() {
         return this.manualConsumption
       },
       set(value) {
         this.$store.commit('configuration/setManualConsumption', value)
+        this.getPvWattData()
       },
     },
     cost: {
@@ -75,17 +77,16 @@ export default {
     },
     yearlyUsage: {
       get() {
-        return this.knowConsuption 
-          ? this.manualYearlyUsage || this.consumption
-          : this.consumption
+        return this.consumption
       },
       set(value) {
         this.$store.commit('configuration/setManualYearlyUsage', value)
+        this.getPvWattData()
       }
     }
   },
   methods: {
-    ...mapActions('configuration', ['setProperty']),
+    ...mapActions('configuration', ['getPvWattData']),
     mapClick(data) {}
   },
   watch: {

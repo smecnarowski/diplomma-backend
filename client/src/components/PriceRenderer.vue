@@ -1,5 +1,5 @@
 <template>
-  <span>{{ priceByCurrency }}({{ currency }})</span>
+  <span>{{ priceByCurrency }}{{ suffix }}</span>
 </template>
 
 <script>
@@ -14,11 +14,15 @@ export default {
       default: 'USD',
       type: String,
     },
+    hideCurrency: Boolean,
     rounded: Boolean,
   },
   template: '<div class="price"></div>',
   computed: {
     ...mapState('configuration', ['rates', 'currency']),
+    suffix() {
+      return this.hideCurrency ? '' : `(${ this.currency})`
+    },
     priceByCurrency() {
       if (this.currency === this.baseCurrency) {
         return this.price
