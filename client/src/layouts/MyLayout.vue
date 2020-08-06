@@ -1,35 +1,22 @@
 <template>
-  <q-layout view="hHh lpr fff">
+  <q-layout view="hHh LpR fff">
     <q-header
       elevated
       class="bg-primary text-white"
     >
       <q-toolbar>
-        <!-- <q-btn
-          dense
-          flat
-          round
-          icon="menu"
-          @click="expanded = !expanded"
-        /> -->
-
         <q-toolbar-title>
-          Title
+          {{ stepTitle }}
         </q-toolbar-title>
-
-        <!-- <q-btn
-          dense
-          flat
-          round
-          icon="menu"
-          @click="right = !right"
-        /> -->
+        <q-space />
+        <LanguageSwitcher />
+        <CurrencySwitcher />
       </q-toolbar>
     </q-header>
 
     <q-drawer
       v-model="expanded"
-      v-if="subMenu.length"
+      v-if="false && subMenu.length"
       side="left"
       elevated
       class="inset-drawer gt-sm"
@@ -52,41 +39,8 @@
         </q-tabs>
       </q-scroll-area>
     </q-drawer>
-    <q-drawer
-      show-if-above
-      side="left"
-      :mini="true"
-      :mini-width="80"
-      :content-style="{ background: 'transparent' }"
-      style="width: 80px"
-      bordered
-      class="gt-sm text-grey"
-    >
-      <div class="row full-height">
-        <div class="col self-center">
-          <q-list padding>
-            <q-item
-              clickable
-              v-ripple
-              v-for="(item, index) in menu"
-              :key="index"
-              @click="loadContent(index)"
-              :active="item.path === routeNames[0]"
-            >
-              <q-item-section
-                avatar
-                class="self-right items-center"
-              >
-                <q-icon :name="item.icon" />
-                {{ item.title || item.name }}
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </div>
-      </div>
-    </q-drawer>
 
-    <q-page-container :style="{ 'padding-left': $q.screen.lt.md ? '10px' : '80px', 'padding-right': $q.screen.lt.md ? '10px' : '80px' }">
+    <q-page-container class="q-pa-sm">
       <router-view />
     </q-page-container>
 
@@ -94,43 +48,16 @@
       bordered
       class="bg-white text-primary lt-md"
     >
-      <q-tabs
-        dense
-        active-color="primary"
-        indicator-color="transparent"
-        class="text-grey"
-        v-model="secondTab"
-      >
-        <q-tab
-          v-for="(item, index) in subMenu"
-          :key="index"
-          :name="index"
-          :label="item.title"
-          @click="loadContent(item.parentIndex, index)"
-        ></q-tab>
-      </q-tabs>
-      <q-separator v-if="subMenu.length"></q-separator>
-      <q-tabs
-        dense
-        active-color="primary"
-        indicator-color="transparent"
-        class="text-grey"
-        v-model="firstTab"
-      >
-        <q-tab
-          v-for="(item, index) in menu"
-          :key="index"
-          :name="index"
-          :label="item.title"
-          @click="loadContent(index)"
-        ></q-tab>
-      </q-tabs>
     </q-footer>
   </q-layout>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import routes from './../router/routes'
+import LanguageSwitcher from '../components/LanguageSwitcher'
+import CurrencySwitcher from '../components/CurrencySwitcher'
 
 export default {
   data() {
@@ -145,6 +72,9 @@ export default {
       routeNames: [],
       tab: null
     }
+  },
+  computed: {
+    ...mapState('configuration', ['stepTitle']),
   },
   mounted() {
     this.setRouteNames()
@@ -188,16 +118,20 @@ export default {
       )
     },
     setRouteNames() {
-      this.routeNames = this.$router.currentRoute.name.split('_')
-      this.loadContent(
-        this.menu.findIndex(item => item.path === this.routeNames[0])
-      )
+      // this.routeNames = this.$router.currentRoute.name.split('_')
+      // this.loadContent(
+      //   this.menu.findIndex(item => item.path === this.routeNames[0])
+      // )
     }
   },
   watch: {
     $route(to, from) {
       this.setRouteNames()
     }
+  },
+  components: {
+    LanguageSwitcher,
+    CurrencySwitcher,
   }
 }
 </script>
