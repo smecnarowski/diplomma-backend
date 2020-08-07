@@ -27,7 +27,7 @@ export default {
       if (this.currency === this.baseCurrency) {
         return this.price
       }
-      const priceInUSD = this.price * (this.rates[this.baseCurrency] || 0)
+      const priceInUSD = this.price / (this.rates[this.baseCurrency] || 0)
       return (priceInUSD * this.rates[this.currency]).toFixed(this.rounded ? 0 : 2)
     }
   }
