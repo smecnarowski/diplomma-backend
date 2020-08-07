@@ -3,7 +3,7 @@
     <transition name="fadeIn">
       <q-item class="q-px-none">
         <q-banner dense class="bg-primary text-white full-width">
-          Suggested usage base on "Factbook" data. It's energy consumption per capita for selected country.
+          {{ $t('energy.info') }}
         </q-banner>
       </q-item>
     </transition>
@@ -12,7 +12,7 @@
       v-ripple
     >
       <q-item-section>
-        <q-item-label>I know exact yearly energy consuption </q-item-label>
+        <q-item-label>{{ $t('energy.consumption') }}</q-item-label>
       </q-item-section>
       <q-item-section side>
         <q-toggle
@@ -25,7 +25,7 @@
       <q-input
         v-model.number="yearlyUsage"
         type="number"
-        label="Yearly usage"
+        :label="$t('energy.usage')"
         style="width: 100%"
         suffix="kWh"
         min="10"
@@ -37,7 +37,7 @@
       <q-input
         v-model.number="cost"
         type="number"
-        label="Yearly cost"
+        :label="$t('energy.cost')"
         style="width: 100%"
         min="10"
         step="10"

@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col-12">
-        Location in terms of compass points
+        {{ $t('building.compass') }}
       </div>
     </div>
     <div class="row items-center">
@@ -37,7 +37,7 @@
     </div>
     <div class="row">
       <div class="col-12">
-        The angle of inclination of the surface on which the panels will be placed
+        {{ $t('building.angle') }}
       </div>
     </div>
     <div class="row q-pt-lg">
@@ -58,7 +58,7 @@
     </div>
     <div class="row">
       <div class="col-12">
-        Efficiency related to the tilt and azimuth.
+        {{ $t('building.efficiency') }}
       </div>
     </div>
     <div class="row q-pt-lg">

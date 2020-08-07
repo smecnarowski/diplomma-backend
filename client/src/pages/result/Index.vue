@@ -1,19 +1,19 @@
 <template>
   <div>
     <div class="q-my-xs text-subtitle2">
-      Median degradation rates for modules is {{ degradation * 100 }}% per year 
-      {{ this.priceIncrease ? `and assuming an increase in the electricity price of ${priceIncrease}%` : '' }}
-      it will generate <span>in {{ lastYear }}&nbsp;years</span> electricity totaling <span>{{ income }}({{ currency }})</span>.
+      {{ $t('result.summary[0]', { v: degradation * 100 } ) }}
+      {{ this.priceIncrease ? $t('result.summary[1]', { v: priceIncrease } ) : '' }}
+      <span v-html="$t('result.summary[2]', { v1: lastYear, v2: income, v3: currency })" />.
       {{ 
         this.returnYear
-          ? `Your investment will return in ${returnYear} years where the lines intersect on the chart.`
-          : `It seems that your investment won\'t return in ${lastYear} years period.`
+          ? $t('result.summary[3]', { v: returnYear } )
+          : $t('result.summary[4]', { v: lastYear } )
       }}
     </div>
     <q-input
         v-model.number="cost"
         type="number"
-        label="You can provide assembly costs"
+        :label="$t('result.assembly')"
         style="width: 100%"
         min="0"
         step="10"
@@ -26,7 +26,7 @@
 
     <div class="row q-field--float q-mt-lg">
       <div class="col-12 q-field__label">
-        Assumed annual increase in the price of energy
+        {{ $t('result.increase') }}
       </div>
     </div>
     <div class="row q-pt-lg">
@@ -46,7 +46,7 @@
 
     <div class="row q-field--float q-mt-lg">
       <div class="col-12 text-h6">
-        Costs: {{ installationSum.toFixed(0) }}
+        {{ $t('result.costs') }}: {{ installationSum.toFixed(0) }}
       </div>
     </div>
     <q-list bordered separator>
@@ -58,7 +58,7 @@
 
     <div class="row q-field--float q-mt-lg">
       <div class="col-12 text-h6">
-        Yearly income
+        {{ $t('result.yearly') }}
       </div>
     </div>
     <q-list bordered separator>

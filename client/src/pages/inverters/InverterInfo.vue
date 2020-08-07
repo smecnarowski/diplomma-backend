@@ -2,7 +2,10 @@
   <q-card class="q-mt-sm">
     <q-card-section>
       <div class="text-h6">{{ inverter.name }}</div>
-      <div class="text-subtitle2">Power: {{ inverter.power }}W, Price: <PriceRenderer :price="inverter.price" :baseCurrency="inverter.priceCurrency"/>, Tab: {{ tab }}</div>
+      <div class="text-subtitle2">
+        {{ $t('Power') }}: {{ inverter.power }}W, 
+        {{ $t('Price') }}: <PriceRenderer :price="inverter.price" :baseCurrency="inverter.priceCurrency"/>
+      </div>
     </q-card-section>
 
     <q-card-section>
@@ -20,9 +23,9 @@
             :vertical="$q.screen.gt.lg || $q.screen.lg"
             class="text-teal"
           >
-            <q-tab name="info" icon="info" label="Info" />
-            <q-tab name="properties" icon="list" label="Properties" v-if="hasProperties"/>
-            <q-tab name="image" icon="photo" label="Image"  v-if="hasImage" />
+            <q-tab name="info" icon="info" :label="$t('info')" />
+            <q-tab name="properties" icon="list" :label="$t('properties')" v-if="hasProperties"/>
+            <q-tab name="image" icon="photo" :label="$t('image')" v-if="hasImage" />
           </q-tabs>
         </template>
 
@@ -96,13 +99,13 @@ export default {
         {
           name: 'name',
           required: true,
-          label: 'Name',
+          label: this.$t('Name'),
           align: 'left',
           field: row => row.name,
           format: val => `${val}`,
           sortable: false,
         },
-        { name: 'value', align: 'right', label: 'Value', field: 'value', sortable: false },
+        { name: 'value', align: 'right', label: this.$t('Value'), field: 'value', sortable: false },
       ],
       splitterModel: 20,
       tab: 'info'

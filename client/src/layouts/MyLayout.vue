@@ -6,7 +6,7 @@
     >
       <q-toolbar>
         <q-toolbar-title>
-          {{ stepTitle }}
+          {{ $t(stepTitle) }}
         </q-toolbar-title>
         <q-space />
         <LanguageSwitcher />

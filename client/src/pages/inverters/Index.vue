@@ -4,7 +4,7 @@
       :options="manufacturersOptions" 
       option-value="id" 
       option-label="name" 
-      label="Manufacturer" 
+      :label="$t('manufacturer')" 
       v-model="manufacturer"
       @filter="filterManufacturersFn"
       use-input
@@ -13,15 +13,14 @@
     <div class="row no-wrap items-center q-mt-md q-pa-sm bg-grey-3 rounded-borders">
       <q-toggle
         v-model="allowOversized"
-        label="Allow oversized"
+        :label="$t('inverters.oversized')" 
       />
 
       <q-space />
 
-      
       <q-toggle
         v-model="showAll"
-        label="Show all"
+        :label="$t('inverters.all')" 
         left-label
       />
     </div>

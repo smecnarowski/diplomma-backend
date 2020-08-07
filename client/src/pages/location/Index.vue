@@ -34,7 +34,7 @@
           v-ripple
         >
           <q-item-section>
-            <q-item-label>Direct normal irradiation</q-item-label>
+            <q-item-label>{{ $t('dni_text') }}</q-item-label>
           </q-item-section>
           <q-item-section side>
             {{ solarAtlasData.DNI | rounded }}kWh/m²
@@ -45,7 +45,7 @@
           v-ripple
         >
           <q-item-section>
-            <q-item-label>Terrain elevation</q-item-label>
+            <q-item-label>{{ $t('Terrain elevation') }}</q-item-label>
           </q-item-section>
           <q-item-section side>
             {{ solarAtlasData.ELE | rounded }}m
@@ -56,7 +56,7 @@
           v-ripple
         >
           <q-item-section>
-            <q-item-label>Optimum tilt of PV modules</q-item-label>
+            <q-item-label>{{ $t('optimum-tilt') }}</q-item-label>
           </q-item-section>
           <q-item-section side>
             {{ solarAtlasData.OPTA | rounded }}°
