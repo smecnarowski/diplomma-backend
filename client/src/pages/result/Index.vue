@@ -3,7 +3,7 @@
     <div class="q-my-xs text-subtitle2">
       {{ $t('result.summary[0]', { v: degradation * 100 } ) }}
       {{ this.priceIncrease ? $t('result.summary[1]', { v: priceIncrease } ) : '' }}
-      <span v-html="$t('result.summary[2]', { v1: lastYear, v2: income, v3: currency })" />.
+      <span v-html="$t('result.summary[2]', { v1: lastYear, v2: income.toFixed(0), v3: currency })" />.
       {{ 
         this.returnYear
           ? $t('result.summary[3]', { v: returnYear } )
@@ -92,12 +92,12 @@ export default {
     costs() {
       const costs = [
         { 
-          name: 'Modules ' + this.selectedModule.name + ' x' + this.modulesCount,
+          name: this.$t('Modules') + ' ' + this.selectedModule.name + ' x' + this.modulesCount,
           price: this.modulesPrice,
           priceCurrency: this.modulesCurrency,
         },
         { 
-          name: 'Inverter ' + this.selectedInverter.name,
+          name: this.$t('Inverter') + ' ' + this.selectedInverter.name,
           price: this.selectedInverter.price,
           priceCurrency: this.selectedInverter.priceCurrency,
         },
@@ -105,7 +105,7 @@ export default {
 
       if (this.cost) {
         costs.push({ 
-          name: 'Assembly',
+          name: this.$t('Assembly'),
           price: this.cost,
           priceCurrency: this.currency,
         })
@@ -129,9 +129,9 @@ export default {
     },
     installationSum() {
       return (
-        ( this.modulesPrice * this.rates[this.selectedModule.priceCurrency] ) +
-        ( this.selectedInverter.price * this.rates[this.selectedInverter.priceCurrency])
-      ) * this.rates[this.currency] + this.cost
+        ( this.currencyPrice( this.modulesPrice, this.selectedModule.priceCurrency) ) +
+        ( this.currencyPrice( this.selectedInverter.price, this.selectedInverter.priceCurrency) )
+      ) + this.cost
     },
     lastYear() {
       return this.years.slice(-1)[0] 
@@ -191,9 +191,13 @@ export default {
       return incomes
     }
   },
-  methods: {},
-  mounted() {},
-  watch: {},
+  methods: {
+    currencyPrice(price, baseCurrency) {
+      const priceInUSD = price / (this.rates[baseCurrency] || 0)
+      const result = (priceInUSD * this.rates[this.currency]).toFixed(0)
+      return parseInt(result)
+    }
+  },
   components: {
     'v-chart': ECharts,
     PriceRenderer

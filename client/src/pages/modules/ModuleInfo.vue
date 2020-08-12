@@ -134,7 +134,8 @@ export default {
       return selectedModuleID === this.module._id
     },
     buttonLabel() {
-      return 'Select' + (this.isSelected ? 'ed' : '')
+      const label = this.isSelected ? 'selected' : 'select'
+      return this.$t(label)
     }
   },
   methods: {

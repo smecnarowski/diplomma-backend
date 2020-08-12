@@ -135,7 +135,8 @@ export default {
       return selectedInverterID === this.inverter._id
     },
     buttonLabel() {
-      return 'Select' + (this.isSelected ? 'ed' : '')
+      const label = this.isSelected ? 'selected' : 'select'
+      return this.$t(label)
     }
   },
   methods: {

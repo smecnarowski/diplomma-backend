@@ -8,6 +8,7 @@
       anchor="bottom right"
       self="top right"
       v-model="menuVisible"
+      @show="$refs.searchInput.focus()"
     >
       <q-item>
         <q-item-section>
@@ -16,6 +17,7 @@
             v-model="search"
             maxlength="3"
             class="text-uppercase"
+            ref="searchInput"
           >
             <template v-slot:append>
               <q-icon v-if="search !== ''" name="close" @click="search = ''" class="cursor-pointer" />
