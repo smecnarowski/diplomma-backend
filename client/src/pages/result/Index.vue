@@ -80,15 +80,21 @@ export default {
   name: 'ResultIndex',
   data() {
     return {
-      cost: 0,
       degradation: 0.005,
-      priceIncrease: 2,
       years: Array.from(Array(25).keys(), x => x + 1)
     }
   },
   computed: {
-    ...mapState('configuration', ['currency', 'position', 'rates', 'selectedInverter', 'selectedModule', 'solarAtlasData', 'yearlyCost']),
+    ...mapState('configuration', ['assemblyCost', 'currency', 'energyPriceIncrease', 'position', 'rates', 'selectedInverter', 'selectedModule', 'solarAtlasData', 'yearlyCost']),
     ...mapGetters('configuration', ['consumption', 'efficiency', 'modulesCount']),
+    cost: {
+      get() {
+        return this.assemblyCost
+      },
+      set(value) {
+        this.$store.commit('configuration/setAssemblyCost', value)
+      },
+    },
     costs() {
       const costs = [
         { 
@@ -162,6 +168,14 @@ export default {
             type: 'line'
         }]
       }
+    },
+    priceIncrease: {
+      get() {
+        return this.energyPriceIncrease
+      },
+      set(value) {
+        this.$store.commit('configuration/setEnergyPriceIncrease', value)
+      },
     },
     returnDate() {
       const date = new Date();

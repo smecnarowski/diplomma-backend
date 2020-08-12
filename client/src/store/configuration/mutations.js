@@ -120,3 +120,11 @@ export const setStepTitle = function(state, value) {
 export const showDialog = function(state, dialogData) {
   this._vm.$q.dialog(dialogData)
 }
+
+export const setAssemblyCost = function(state, value) {
+  state.assemblyCost = value
+}
+
+export const setEnergyPriceIncrease = function(state, value) {
+  state.energyPriceIncrease = value
+}

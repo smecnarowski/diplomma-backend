@@ -1,8 +1,9 @@
 export default function() {
   return {
-    modulesAngle: 30,
+    assemblyCost: 0,
     consumption: null,
     currency: 'USD',
+    energyPriceIncrease: 2,
     invertersLoading: false,
     invertersManufacturer: '',
     loadedInverters: [],
@@ -10,6 +11,7 @@ export default function() {
     manualConsumption: false,
     manufacturersData: [],
     manufacturersDataLoading: false,
+    modulesAngle: 30,
     modulesDirection: 180,
     modulesLoading: false,
     modulesManufacturer: '',

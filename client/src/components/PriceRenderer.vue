@@ -17,7 +17,6 @@ export default {
     hideCurrency: Boolean,
     rounded: Boolean,
   },
-  template: '<div class="price"></div>',
   computed: {
     ...mapState('configuration', ['rates', 'currency']),
     suffix() {

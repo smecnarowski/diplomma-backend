@@ -2,6 +2,7 @@
 // so you can safely delete all default props below
 
 export default {
+  Assembly: 'Koszty montażu',
   building: {
     angle: 'Kąt nachylenia modułów wzgledem powierzchni na której zostaną umieszczone',
     compass: 'Odchylenie od południka',

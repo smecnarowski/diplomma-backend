@@ -14,32 +14,6 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="expanded"
-      v-if="false && subMenu.length"
-      side="left"
-      elevated
-      class="inset-drawer gt-sm"
-      :width="100"
-    >
-      <q-scroll-area class="fit">
-        <q-tabs
-          vertical
-          dense
-          active-color="positive"
-          indicator-color="transparent"
-          class="text-grey"
-          v-model="secondTab"
-        >
-          <q-tab
-            v-for="(menuItem, index) in subMenu"
-            :key="index"
-            :label="menuItem.title || menuItem.name"
-          />
-        </q-tabs>
-      </q-scroll-area>
-    </q-drawer>
-
     <q-page-container class="q-pa-sm">
       <router-view />
     </q-page-container>
