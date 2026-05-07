@@ -35,7 +35,7 @@
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.1",
     "controller": "^1.0.0",
-    "mongoose": "^5.9.9",
+    "mongoose": "^6.13.9",
     "papaparse": "^5.2.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
